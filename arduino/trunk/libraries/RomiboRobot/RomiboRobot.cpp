@@ -525,22 +525,23 @@ void RomiboRobot::drive(int leftSpeed, int rightSpeed)
   if (leftSpeed == 0) {
     digitalWrite( mot_drv1_pin[ROMIBO_LEFT_MOTOR], LOW );      // coast: IN1=0    
     digitalWrite( mot_drv2_pin[ROMIBO_LEFT_MOTOR], LOW );      // coast: IN2=0    
- 
-  } else if (leftSpeed > 0) {
+  }
+  else if (leftSpeed > 0) {
     digitalWrite( mot_drv2_pin[ROMIBO_LEFT_MOTOR], LOW );      // forward: IN2=0
 
     if (leftSpeed >= 100) {
       digitalWrite( mot_drv1_pin[ROMIBO_LEFT_MOTOR], HIGH );      // at full speed, just drive IN1 high
-    } else {  // else configure timer for IN1 PWM
-      const uint8_t COMB =  2;   // OCnB is PWM output for DRV1
-      const uint8_t COMC =  0;   // OCnC is normal digital output for DRV2
+    }
+    else {  // else configure timer for IN1 PWM
+        const uint8_t COMB =  2;   // OCnB is PWM output for DRV1
+        const uint8_t COMC =  0;   // OCnC is normal digital output for DRV2
       
         uint16_t pwm = map( map( abs(leftSpeed), 0, 100, 0, 10), 0, 10, 200, DRIVEPWMDIVISOR);
       
         TCCR3A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
-      TCCR3B = (IC << 6) | ((WGM & 0x0c) << 1) | (CS); 
-      OCR3A  = DRIVEPWMDIVISOR;
-      OCR3B  = pwm;
+        TCCR3B = (IC << 6) | ((WGM & 0x0c) << 1) | (CS); 
+        OCR3A  = DRIVEPWMDIVISOR;
+        OCR3B  = pwm;
         
         Console.print("Left motor forward: Limit = ");
         Console.print(DRIVEPWMDIVISOR);
@@ -549,27 +550,28 @@ void RomiboRobot::drive(int leftSpeed, int rightSpeed)
         Console.print("\n");
     }
 
-  } else {
+  }
+  else {
     digitalWrite( mot_drv1_pin[ROMIBO_LEFT_MOTOR], LOW );      // reverse: IN1=0
     if (leftSpeed <= -100) {
       digitalWrite( mot_drv2_pin[ROMIBO_LEFT_MOTOR], HIGH );   // at full reverse, just drive IN2 high
-    } else {  // else configure timer for IN2 PWM
+    }
+    else {  // else configure timer for IN2 PWM
       const uint8_t COMB =  0;   // OCnB is normal digital output for DRV1
       const uint8_t COMC =  2;   // OCnC is PWM for DRV2
-      
-        uint16_t pwm = map( map( abs(leftSpeed), 0, 100, 0, 10), 0, 10, 200, DRIVEPWMDIVISOR);
-      
-        TCCR3A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
+        
+      uint16_t pwm = map( map( abs(leftSpeed), 0, 100, 0, 10), 0, 10, 200, DRIVEPWMDIVISOR);
+        
+      TCCR3A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
       TCCR3B = (IC << 6) | ((WGM & 0x0c) << 1) | (CS); 
       OCR3A  = DRIVEPWMDIVISOR;
       OCR3C  = pwm;
         
-        Console.print("Left motor reverse: Limit = ");
-        Console.print(DRIVEPWMDIVISOR);
-        Console.print(" Threshold = ");
-        Console.print(pwm);
-        Console.print("\n");
-        
+      Console.print("Left motor reverse: Limit = ");
+      Console.print(DRIVEPWMDIVISOR);
+      Console.print(" Threshold = ");
+      Console.print(pwm);
+      Console.print("\n");
     }
   } // end of left motor
 
@@ -578,43 +580,42 @@ void RomiboRobot::drive(int leftSpeed, int rightSpeed)
     digitalWrite( mot_drv1_pin[ROMIBO_RIGHT_MOTOR], LOW );      // coast: IN1=0    
     digitalWrite( mot_drv2_pin[ROMIBO_RIGHT_MOTOR], LOW );      // coast: IN2=0    
  
-  } else if (rightSpeed > 0) {
+  }
+  else if (rightSpeed > 0) {
     digitalWrite( mot_drv2_pin[ROMIBO_RIGHT_MOTOR], LOW );      // forward: IN2=0
 
     if (rightSpeed >= 100) {
       digitalWrite( mot_drv1_pin[ROMIBO_RIGHT_MOTOR], HIGH );      // at full speed, just drive IN1 high
-    } else {  // else configure timer for IN1 PWM
+    }
+    else {  // else configure timer for IN1 PWM
       const uint8_t COMB =  2;   // OCnB is PWM output for DRV1
       const uint8_t COMC =  0;   // OCnC is normal digital output for DRV2
       
-        uint16_t pwm = map( map( abs(rightSpeed), 0, 100, 0 , 10), 0, 10, 200, DRIVEPWMDIVISOR);
+      uint16_t pwm = map( map( abs(rightSpeed), 0, 100, 0 , 10), 0, 10, 200, DRIVEPWMDIVISOR);
       
-        TCCR4A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
+      TCCR4A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
       TCCR4B = (IC << 6) | ((WGM & 0x0c) << 1) | (CS); 
       OCR4A  = DRIVEPWMDIVISOR;
       OCR4B  = pwm;
-        
-        
     }
-
-  } else {
+  }
+  else {
     digitalWrite( mot_drv1_pin[ROMIBO_RIGHT_MOTOR], LOW );      // reverse: IN1=0
     if (rightSpeed <= -100) {
       digitalWrite( mot_drv2_pin[ROMIBO_RIGHT_MOTOR], HIGH );   // at full reverse, just drive IN2 high
-    } else {  // else configure timer for IN2 PWM
+    }
+    else {  // else configure timer for IN2 PWM
       const uint8_t COMB =  0;   // OCnB is normal digital output for DRV1
       const uint8_t COMC =  2;   // OCnC is PWM for DRV2
       
-        uint16_t pwm = map( map( abs(rightSpeed), 0, 100, 0, 10), 0, 10, 200, DRIVEPWMDIVISOR);
+      uint16_t pwm = map( map( abs(rightSpeed), 0, 100, 0, 10), 0, 10, 200, DRIVEPWMDIVISOR);
       
-        TCCR4A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
+      TCCR4A = (COMA << 6) | (COMB << 4) | (COMC << 2) | (WGM & 3); 
       TCCR4B = (IC << 6) | ((WGM & 0x0c) << 1) | (CS); 
       OCR4A  = DRIVEPWMDIVISOR;
       OCR4C  = pwm;
-        
-            }
+    }
   } // end of right motor
-
 }
 #undef DRIVEPWMRATE
 #undef DRIVEPWMDIVISOR

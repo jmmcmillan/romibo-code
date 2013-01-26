@@ -1,4 +1,4 @@
-// RomiboEmotions.cpp : An emotion library
+;// RomiboEmotions.cpp : An emotion library
 // 
 // Copyright (c) 2011 John Frens
 

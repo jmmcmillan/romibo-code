@@ -1,0 +1,4 @@
+2012.01.26
+Note that these files are not the latest Arduino files. They were placed on the git
+as a placeholder because the "code" repository was empty.
+-Mansfield Mark
