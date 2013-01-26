@@ -1,0 +1,16 @@
+Goals:
+  +Implement a finite state machine interface for Romibo, so that state machines need not be recoded
+  +Eventually, we want a settable state, so that not every state needs to be hard-coded
+  +Reduced complexity for developers coding new states
+  +Romibo should act along a "script" while idle in each state, but still be reactive to input
+  +Upon sensor input, Romibo will act along a short script and then either return to the same state or enter a new state
+
+Challenges:
+  ~How reactive can Romibo be? Can (and should) we ensure that Romibo is able to react to new input at all times?
+  ~How should state transitions be handled?
+  ~How can we make states more reusable?
+  ~How can we implement a state machine without an endless stack of function calls?
+
+Other thoughts:
+  -Should Romibo be able to react while reacting? Nope. When Romibo reacts to an input, the result should be no more than a short inturruption in the state's normal script. Rather than requiring romibo to be able to react while reacting, a new state should be defined to handle such a case.
+  -In any given state, Romibo should act idly, but react to any input. How much can be left to the state library's user?
